@@ -15,6 +15,9 @@ function github_api($url, $token = null, $method = "GET", $data = null) {
     ];
     $context = stream_context_create($opts);
     $res = file_get_contents(GITHUB_API . $url, false, $context);
+    if ($res === false) {
+        throw new Exception("Error accessing GitHub API: " . error_get_last()['message']);
+    }
     return json_decode($res, true);
 }
 
